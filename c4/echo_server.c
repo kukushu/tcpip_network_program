@@ -7,7 +7,7 @@
 #include <arpa/inet.h>
 
 
-#define SIZEOF_BUF 50
+#define SIZEOF_BUF 5000
 
 // two arguments hello_server.c and port
 
@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     struct sockaddr_in client_addr;
     int sizeof_client_addr;
     char str_arr[20];
-    char message[50];
+    char message[SIZEOF_BUF];
 
     memset(&server_addr, 0, sizeof(server_addr));
     memset(&client_addr, 0, sizeof(client_addr));

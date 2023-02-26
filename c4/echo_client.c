@@ -1,3 +1,6 @@
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
@@ -5,7 +8,7 @@
 #include <sys/socket.h>
 #include <string.h>
 
-#define SIZEOF_BUF 50
+#define SIZEOF_BUF 1500000
 
 void error_handling(char *);
 int main(int argc, char* argv[]) {
@@ -30,21 +33,40 @@ int main(int argc, char* argv[]) {
     } else {
         puts("Connected..................");
     }
-   
-   	while (1) { 
+
+
+    int fp;
+    fp = open("test/test", O_RDONLY);
+    int fp_receive;
+    fp_receive = open("test/test.receive", O_WRONLY | O_CREAT);
+
+
+
+    int i = 1;
+    while (i) { 
         puts("enter Q to quit");
-        int strlen_mes = read(1, message_to_server, SIZEOF_BUF - 1);
+        int strlen_mes = read(fp, message_to_server, SIZEOF_BUF - 1);
         if (!strcmp(message_to_server, "q\n") || !strcmp(message_to_server, "Q\n")) {
             break;
         }
+	printf("read return value : %d\n", strlen_mes);
         write(sock_id, message_to_server, strlen(message_to_server));
         strlen_mes = read(sock_id, message_from_server, SIZEOF_BUF - 1);
+	
+	printf("the strlen_of_receive_message : %d\n", strlen_mes);
+	write(fp_receive, message_from_server, strlen_mes);
         printf("message from server:%s\n", message_from_server);
         
         memset(message_from_server, 0, sizeof(message_from_server));
         memset(message_to_server, 0, sizeof(message_to_server));
 
+	i --;
     }
+
+    close(fp); 
+    close(fp_receive);
+
+
     close(sock_id);
 
 
