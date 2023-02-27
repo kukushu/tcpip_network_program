@@ -1,10 +1,12 @@
-all: echo_client echo_server
-echo_client: echo_client.c
-	gcc -o echo_client echo_client.c
-echo_server: echo_server.c
-	gcc -o echo_server echo_server.c
+all: op_client op_server
+op_client: echo_client.c
+	gcc -o op_client op_client.c
+op_server: echo_server.c
+	gcc -o op_server op_server.c
 server:
-	./echo_server 8899
+	./op_server 8899
 client:
-	./echo_client 127.0.0.1 8899
+	./op_client 127.0.0.1 8899
+clean:
+	rm -f op_client op_server
 
