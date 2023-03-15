@@ -1,0 +1,14 @@
+#include <stdio.h>
+struct test {
+    int a;
+    char b[1];
+};
+int main() {
+    struct aa;
+    struct bb;
+    aa.a = 1;
+    bb = aa;
+    printf("%d\n", bb.a);
+
+    return 0;
+}
